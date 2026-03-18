@@ -1,4 +1,4 @@
-﻿# Bonacomp One — Documentação do Usuário
+# Bonacomp One — Documentação do Usuário
 
 Manuais e guias rápidos para os módulos do Bonacomp One.
 
@@ -15,3 +15,8 @@ Se é sua primeira vez usando o Bonacomp One, comece pelo módulo **Menu e Confi
 ### Análises
 - [Manual do Usuário](Analises/AnalisesManualDoUsuario.md) — documentação completa do módulo de análises
 - [Guia Rápido](Analises/AnalisesGuiaRapido.md) — referência rápida e objetiva
+
+### Cadastros
+- [Manual do Usuário](Cadastros/CadastrosManualDoUsuario.md) — documentação completa do módulo de cadastros
+- [Guia Rápido](Cadastros/CadastrosGuiaRapido.md) — referência rápida e objetiva
+- [Guia Rápido — Pessoas](Cadastros/CadastrosPessoasGuiaRapido.md) — foco em cadastro de pessoas, criação de usuário e permissões
