@@ -1,9 +1,9 @@
 ﻿# Bonacomp One — Guia Rápido: Análises
 
 > **Documento**: Análises Guia Rápido
-> **Versão do App**: 1.0.477
+> **Versão do App**: 1.0.623
 > **Plataforma**: .NET MAUI 10.0.20
-> **Última atualização**: 2026-03-18
+> **Última atualização**: 2026-03-20
 
 ---
 
@@ -17,13 +17,14 @@ Presets salvam **toda** a sua configuração (filtros, colunas, gráficos e KPIs
 2. **Filtros** → configure os filtros que usa no dia a dia
 3. **Campos** → desmarque colunas que não precisa
 4. **Gráficos** / **KPIs** → desmarque os que não precisa
-5. Clique em **Salvar** → digite um nome descritivo → confirme
-6. Pronto! O preset ficará disponível no Picker de **Preset**
+5. **Agrupar** → marque dimensões para agrupar (ex.: Vendedor, Empresa) *(opcional)*
+6. Clique em **Salvar** → digite um nome descritivo → confirme
+7. Pronto! O preset ficará disponível no Picker de **Preset**
 
 ### Usando um preset salvo
 
 1. **Fonte** → selecione a view
-2. **Preset** → selecione o preset desejado (os filtros, colunas, gráficos e KPIs serão configurados automaticamente)
+2. **Preset** → selecione o preset desejado (os filtros, colunas, gráficos, KPIs e agrupamentos serão configurados automaticamente)
 3. Clique em **Carregar**
 
 > **1 clique no preset + 1 clique em Carregar = análise pronta.**
@@ -40,6 +41,8 @@ Você pode criar **vários presets para a mesma view**, cada um com uma visão d
 | **Pedidos por Vendedor** | Filtro: vendedor específico. KPI: valor total. Gráfico: por data |
 | **Pedidos Empresa X** | Filtro: empresa = X. Colunas resumidas, sem gráficos |
 | **Exportação Mensal** | Filtro: mês anterior. Todas as colunas (para exportar XLSX completo) |
+| **Resumo por Vendedor** | Agrupar: Vendedor. KPI: valor total. Visão consolidada por vendedor |
+| **Resumo por Empresa** | Agrupar: Empresa. Filtro: mês atual. Visão consolidada por empresa |
 
 #### View de Faturamento
 | Nome do Preset | O que configura |
@@ -79,7 +82,8 @@ Você pode criar **vários presets para a mesma view**, cada um com uma visão d
 1. **Fonte** → selecione a view desejada no Picker
 2. *(opcional)* **Filtros** → habilite os filtros desejados (checkbox) e preencha valores
 3. *(opcional)* **Campos** → desmarque colunas que não precisa ver
-4. Clique em **Carregar**
+4. *(opcional)* **Agrupar** → marque dimensões para agrupar
+5. Clique em **Carregar**
 
 > Pronto! A tabela, KPIs e gráficos aparecerão.
 
@@ -133,13 +137,35 @@ Você pode criar **vários presets para a mesma view**, cada um com uma visão d
 
 ## Escolher colunas, gráficos e KPIs visíveis
 
-1. Clique em **Campos**, **Gráficos** ou **KPIs**
+1. Clique em **Campos**, **Gráficos**, **KPIs** ou **Agrupar**
 2. Marque/desmarque os itens desejados
 3. Clique em **Carregar**
 
 > Atalhos em cada painel: **Todos** (marca tudo) · **Nenhum** (desmarca tudo)
 
 > **Dica**: Após configurar, salve como preset para não precisar repetir!
+
+---
+
+## Agrupar dados (pelo painel)
+
+1. Clique no botão **Agrupar** na barra de ferramentas
+2. Marque uma ou mais dimensões (ex.: Vendedor, Empresa, Situação)
+3. Clique em **Carregar**
+4. A tabela mostrará dados consolidados (valores somados, percentuais recalculados)
+
+> Pode combinar com filtros: filtre por período e agrupe por vendedor para ver o desempenho de cada um.
+
+---
+
+## Agrupar pela coluna (atalho rápido)
+
+1. Na tabela, localize o **ícone de agrupamento** no cabeçalho da coluna desejada
+2. **Clique** no ícone → a tabela agrupa automaticamente por aquela dimensão
+3. O ícone fica **destacado** e o painel **Agrupar** abre mostrando a seleção
+4. Para desagrupar: clique no ícone destacado novamente
+
+> Para agrupar por múltiplas dimensões, use o painel **Agrupar**.
 
 ---
 
@@ -194,5 +220,8 @@ Você pode criar **vários presets para a mesma view**, cada um com uma visão d
 | Filtrar pela coluna | Funil (▼) → marcar → Aplicar |
 | Ordenar | Clicar no cabeçalho da coluna |
 | Ocultar colunas | Campos → desmarcar → Carregar |
+| Agrupar pelo painel | Agrupar → marcar dimensões → Carregar |
+| Agrupar pela coluna | Ícone de agrupamento no cabeçalho → clicar |
+| Desagrupar | Clicar no ícone destacado (ou desmarcar no painel) |
 | Exportar Excel | Toolbar → XLSX → Tudo ou Página |
 | Recomeçar do zero | Limpar |

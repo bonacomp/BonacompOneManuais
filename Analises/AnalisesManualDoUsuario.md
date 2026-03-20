@@ -1,9 +1,9 @@
 ﻿# Bonacomp One — Manual do Usuário: Análises
 
 > **Documento**: Análises Manual do Usuário
-> **Versão do App**: 1.0.477
+> **Versão do App**: 1.0.623
 > **Plataforma**: .NET MAUI 10.0.20
-> **Última atualização**: 2026-03-18
+> **Última atualização**: 2026-03-20
 > **Público-alvo**: Usuários finais do Bonacomp One
 
 ---
@@ -19,12 +19,14 @@
    - 4.3 [Campos (Colunas)](#43-campos-colunas)
    - 4.4 [Gráficos](#44-gráficos)
    - 4.5 [KPIs (Indicadores)](#45-kpis-indicadores)
-   - 4.6 [Botão Carregar](#46-botão-carregar)
-   - 4.7 [Botão Limpar](#47-botão-limpar)
+   - 4.6 [Agrupar](#46-agrupar)
+   - 4.7 [Botão Carregar](#47-botão-carregar)
+   - 4.8 [Botão Limpar](#48-botão-limpar)
 5. [Tabela de Dados (Desktop)](#5-tabela-de-dados-desktop)
    - 5.1 [Ordenação](#51-ordenação)
    - 5.2 [Funil de Coluna](#52-funil-de-coluna)
    - 5.3 [Paginação](#53-paginação)
+   - 5.4 [Ícone de Agrupamento na Coluna](#54-ícone-de-agrupamento-na-coluna)
 6. [Cards de Dados (Mobile)](#6-cards-de-dados-mobile)
 7. [Interação com Gráficos (Estilo Power BI)](#7-interação-com-gráficos-estilo-power-bi)
 8. [Presets (Configurações Salvas)](#8-presets-configurações-salvas)
@@ -42,6 +44,7 @@ O módulo **Análises** permite consultar e visualizar dados da empresa de forma
 - Filtrar por empresa, vendedor, período e outros critérios
 - Escolher quais colunas, gráficos e KPIs exibir
 - Interagir com gráficos clicando em fatias/pontos para filtrar dados (estilo Power BI)
+- Agrupar dados por dimensões (vendedor, empresa, cliente, etc.) para análises consolidadas
 - Exportar dados para Excel (XLSX) ou CSV
 - Salvar configurações como presets para reutilizar
 
@@ -83,7 +86,7 @@ Ao entrar no módulo Análises, você verá botões representando as categorias 
 
 Após escolher uma categoria, a tela de análise é aberta. Esta tela contém:
 - Uma **barra de ferramentas** no topo (Fonte, Preset e botões de ação)
-- Painéis expansíveis de **Filtros**, **Campos**, **Gráficos** e **KPIs**
+- Painéis expansíveis de **Filtros**, **Campos**, **Gráficos**, **KPIs** e **Agrupar**
 - A **tabela de dados** (desktop) ou **cards** (mobile)
 - A **barra de paginação** no rodapé (desktop)
 
@@ -94,7 +97,7 @@ No topo da tela há o campo **Fonte** com um seletor (Picker).
 1. Clique/toque no Picker de **Fonte**.
 2. Aparecerá a lista de views (fontes de dados) disponíveis na categoria escolhida.
 3. Selecione a view desejada.
-4. Ao selecionar, os painéis de Filtros, Campos, Gráficos e KPIs serão abertos automaticamente para você configurar a análise antes de carregar.
+4. Ao selecionar, os painéis de Filtros, Campos, Gráficos, KPIs e Agrupar serão abertos automaticamente para você configurar a análise antes de carregar.
 
 > **Dica**: O nome da view indica o conteúdo dos dados. Por exemplo, `view_comercial_pedidos_base` contém dados de pedidos comerciais.
 
@@ -182,9 +185,35 @@ Cada card de KPI exibe:
 
 Quando há diferença entre "Todos" e "Filtrados", o valor filtrado fica **em destaque** para facilitar a comparação.
 
-### 4.6 Botão Carregar
+### 4.6 Agrupar
 
-Após configurar a fonte, filtros, campos, gráficos e KPIs:
+O painel de **Agrupar** permite agrupar os dados por uma ou mais dimensões, condensando os resultados por vendedor, empresa, cliente, situação ou qualquer outra coluna agrupável.
+
+- Cada coluna agrupável aparece com um **checkbox** e o **título** (ex.: Vendedor, Empresa, Situação).
+- **Marque** uma ou mais dimensões para agrupar.
+- Ao carregar com agrupamento ativo, a tabela exibirá os dados consolidados: colunas de valor serão somadas, percentuais serão recalculados e uma coluna **Registros** indicará quantos registros originais compõem cada grupo.
+
+**Ações rápidas**:
+| Botão | Ação |
+|---|---|
+| **Todos** | Marca todas as dimensões |
+| **Nenhum** | Desmarca todas as dimensões |
+
+**Exemplos de agrupamento**:
+
+| Dimensão selecionada | Resultado na tabela |
+|---|---|
+| Vendedor | Uma linha por vendedor com totais somados |
+| Empresa + Vendedor | Uma linha por combinação empresa/vendedor |
+| Situação | Uma linha por situação (Faturado, Aberto, etc.) |
+
+> **Dica**: O agrupamento pode ser combinado com os pré-filtros. Por exemplo, filtre por um período e agrupe por vendedor para ver o desempenho de cada vendedor naquele período.
+
+> **Nota**: KPIs e gráficos continuam funcionando normalmente quando o agrupamento está ativo. Os KPIs mostram totais globais e os gráficos suas perspectivas próprias.
+
+### 4.7 Botão Carregar
+
+Após configurar a fonte, filtros, campos, gráficos, KPIs e agrupamento:
 
 1. Clique no botão **Carregar**.
 2. Os painéis de configuração serão fechados automaticamente.
@@ -193,11 +222,11 @@ Após configurar a fonte, filtros, campos, gráficos e KPIs:
 
 > **Nota**: O botão Carregar só funciona quando uma view (Fonte) está selecionada.
 
-### 4.7 Botão Limpar
+### 4.8 Botão Limpar
 
 O botão **Limpar** (ao lado do Picker de Fonte) faz um reset completo:
 - Remove todos os filtros aplicados
-- Restaura todas as colunas, gráficos e KPIs
+- Restaura todas as colunas, gráficos, KPIs e agrupamento
 - Limpa os dados carregados
 - Mantém a view selecionada (como se tivesse sido selecionada pela primeira vez)
 
@@ -246,6 +275,23 @@ Na parte inferior da tela há a barra de paginação:
 | **Picker de tamanho** | Alterar quantidade de registros por página (10, 20, 50 ou 100) |
 | **Info de registros** | Mostra o intervalo exibido (ex.: "1-50 de 1.234") |
 
+### 5.4 Ícone de Agrupamento na Coluna
+
+Colunas que representam dimensões agrupáveis (como Vendedor, Empresa, Cliente, Situação) possuem um **ícone de agrupamento** no cabeçalho da coluna, antes do título.
+
+**Como usar**:
+
+1. Localize o ícone de agrupamento no cabeçalho da coluna desejada.
+2. **Clique/toque** no ícone para agrupar por aquela dimensão.
+3. A tabela será recarregada automaticamente com os dados agrupados.
+4. O ícone ficará **destacado** (cor primária) indicando que a coluna está agrupada.
+5. O painel **Agrupar** será aberto automaticamente, mostrando a dimensão selecionada.
+6. Para **desagrupar**, clique novamente no ícone destacado.
+
+> **Dica**: O ícone na coluna é um atalho rápido para agrupamento de uma dimensão. Para agrupar por múltiplas dimensões, use o painel **Agrupar** onde é possível marcar várias ao mesmo tempo.
+
+> **Nota**: Quando o agrupamento foi definido via **preset**, o ícone na coluna fica desabilitado para evitar alterações acidentais. Para modificar, exclua o preset ou altere pelo painel **Agrupar**.
+
 ---
 
 ## 6. Cards de Dados (Mobile)
@@ -291,6 +337,7 @@ Presets permitem **salvar uma configuração completa** de análise para reutili
 - Gráficos selecionados/ocultos
 - KPIs selecionados/ocultos
 - Filtros habilitados com seus valores (datas, seleções de empresa, vendedor, etc.)
+- Agrupamento ativo (dimensões selecionadas para agrupar)
 
 ### Salvando um preset
 
@@ -408,6 +455,16 @@ O acesso às funcionalidades de Análises é controlado por permissões. A tabel
 ### Posso imprimir os dados?
 - A funcionalidade de impressão está desabilitada na versão atual. Use a exportação para XLSX/CSV e imprima pelo Excel.
 
+### Como agrupar dados por vendedor (ou outra dimensão)?
+- Clique no botão **Agrupar** na barra de ferramentas, marque a dimensão desejada e clique em **Carregar**. Ou use o atalho: clique no **ícone de agrupamento** no cabeçalho da coluna desejada na tabela.
+
+### Posso agrupar por mais de uma dimensão?
+- Sim! No painel **Agrupar**, marque várias dimensões (ex.: Vendedor + Empresa). A tabela mostrará uma linha para cada combinação.
+
+### Como desagrupar?
+- Se agrupou pelo **painel** (pré-filtro/preset): desmarque as dimensões no painel **Agrupar** e carregue novamente.
+- Se agrupou pelo **ícone na coluna**: clique novamente no mesmo ícone para desagrupar.
+
 ---
 
-> **Precisa de ajuda?** Entre em contato com o administrador do sistema ou com a equipe de suporte.
+> **Precisa de ajuda?**
