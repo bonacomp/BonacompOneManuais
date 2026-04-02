@@ -1,9 +1,9 @@
 ﻿# Bonacomp One — Guia Rápido: Análises
 
 > **Documento**: Análises Guia Rápido
-> **Versão do App**: 1.0.623
+> **Versão do App**: 1.0.933
 > **Plataforma**: .NET MAUI 10.0.20
-> **Última atualização**: 2026-03-20
+> **Última atualização**: 2026-04-02
 
 ---
 
@@ -24,10 +24,10 @@ Presets salvam **toda** a sua configuração (filtros, colunas, gráficos e KPIs
 ### Usando um preset salvo
 
 1. **Fonte** → selecione a view
-2. **Preset** → selecione o preset desejado (os filtros, colunas, gráficos, KPIs e agrupamentos serão configurados automaticamente)
+2. **Preset** → selecione o preset desejado (filtros, colunas, gráficos, KPIs e agrupamentos são configurados **instantaneamente**)
 3. Clique em **Carregar**
 
-> **1 clique no preset + 1 clique em Carregar = análise pronta.**
+> **1 clique no preset (instantâneo) + 1 clique em Carregar = análise pronta.**
 
 ### Ideias de presets por view
 
@@ -110,13 +110,16 @@ Você pode criar **vários presets para a mesma view**, cada um com uma visão d
 
 ---
 
-## Filtrar clicando no gráfico
+## Filtrar clicando no gráfico (cross-filtering)
 
 1. **Clique em uma fatia** do gráfico de pizza (ou ponto do gráfico de linha)
-2. A tabela e KPIs serão atualizados automaticamente
-3. Para **remover** o filtro: clique na mesma fatia novamente
+2. A tabela, KPIs e **todos os outros gráficos** são atualizados automaticamente
+3. A fatia clicada mantém sua **cor original** mesmo que o ranking mude
+4. Para **remover** o filtro: clique na mesma fatia novamente
 
-> Pode clicar em gráficos diferentes para acumular filtros (ex: empresa + vendedor).
+> Pode clicar em gráficos diferentes para **acumular filtros** (ex: Empresa 3 + Vendedor Denis).
+> Cada gráfico recalcula mostrando sua dimensão completa no contexto dos outros filtros.
+> Gráficos de pizza com **1 só fatia** (100%) são ocultados automaticamente.
 
 ---
 
@@ -125,6 +128,8 @@ Você pode criar **vários presets para a mesma view**, cada um com uma visão d
 1. Clique no **ícone de funil** (▼) no cabeçalho da coluna
 2. Marque/desmarque os valores desejados
 3. Clique em **Aplicar**
+
+> O funil e os gráficos são **sincronizados**: filtrar pelo funil atualiza os gráficos, e filtrar 1 só valor destaca automaticamente a fatia no gráfico correspondente.
 
 ---
 
@@ -211,13 +216,16 @@ Você pode criar **vários presets para a mesma view**, cada um com uma visão d
 
 | Quero... | Faço... |
 |---|---|
-| Análise rápida com preset | Fonte → Preset → Carregar |
+| Análise rápida com preset | Fonte → Preset (instantâneo) → Carregar |
 | Criar preset | Configurar tudo → Salvar → nome |
 | Consultar sem preset | Fonte → (filtros) → Carregar |
 | Filtrar por data | Filtros → checkbox → datas → Carregar |
 | Filtrar por empresa | Filtros → checkbox → selecionar → Carregar |
-| Filtrar pelo gráfico | Clicar na fatia/ponto |
+| Filtrar pelo gráfico | Clicar na fatia/ponto (cross-filtering) |
+| Acumular filtros nos gráficos | Clicar em fatias de gráficos diferentes |
+| Remover filtro do gráfico | Clicar na mesma fatia novamente |
 | Filtrar pela coluna | Funil (▼) → marcar → Aplicar |
+| Sincronizar funil e gráfico | Usar o funil na mesma coluna do gráfico |
 | Ordenar | Clicar no cabeçalho da coluna |
 | Ocultar colunas | Campos → desmarcar → Carregar |
 | Agrupar pelo painel | Agrupar → marcar dimensões → Carregar |

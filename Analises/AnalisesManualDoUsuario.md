@@ -1,9 +1,9 @@
 ﻿# Bonacomp One — Manual do Usuário: Análises
 
 > **Documento**: Análises Manual do Usuário
-> **Versão do App**: 1.0.623
+> **Versão do App**: 1.0.933
 > **Plataforma**: .NET MAUI 10.0.20
-> **Última atualização**: 2026-03-20
+> **Última atualização**: 2026-04-02
 > **Público-alvo**: Usuários finais do Bonacomp One
 
 ---
@@ -180,10 +180,12 @@ O painel de **KPIs** permite escolher quais indicadores numéricos serão exibid
 
 Cada card de KPI exibe:
 - **Título**: nome do indicador (ex.: "Registros", "Valor Total")
-- **Todos**: valor total considerando apenas os pré-filtros
-- **Filtrados**: valor após aplicar também os filtros de coluna/gráfico
+- **Todos**: valor total considerando apenas os pré-filtros (o "universo base")
+- **Filtrados**: valor após aplicar também os filtros de coluna/gráfico (refinamento)
 
 Quando há diferença entre "Todos" e "Filtrados", o valor filtrado fica **em destaque** para facilitar a comparação.
+
+> **Consistência**: Os KPIs são sempre consistentes, inclusive com agrupamento ativo. "Todos" reflete o universo do pré-filtro e "Filtrados" reflete os filtros adicionais — independentemente de o agrupamento estar ligado ou não.
 
 ### 4.6 Agrupar
 
@@ -261,6 +263,8 @@ Cada coluna da tabela possui um **ícone de funil** (filtro) no cabeçalho.
 
 > **Importante**: Os filtros de funil funcionam em conjunto com os pré-filtros e a interação com gráficos. Todos se acumulam para refinar a análise.
 
+> **Sincronização funil ↔ gráfico**: O funil e os gráficos compartilham a mesma lógica de filtro. Se você filtrou pelo gráfico (ex.: clicou no vendedor "João") e depois usa o funil da mesma coluna (vendedor), o filtro do gráfico é automaticamente substituído pelo do funil. Da mesma forma, ao usar o botão **Limpar** do funil, a seleção do gráfico correspondente é removida.
+
 ### 5.3 Paginação
 
 Na parte inferior da tela há a barra de paginação:
@@ -307,24 +311,46 @@ No celular (Android/iOS), em vez de tabela, os dados são exibidos como **cards*
 
 ## 7. Interação com Gráficos (Estilo Power BI)
 
-Os gráficos do módulo Análises são **interativos**, funcionando de forma semelhante ao Power BI:
+Os gráficos do módulo Análises são **interativos**, funcionando com **cross-filtering** (filtragem cruzada), semelhante ao Power BI.
 
 ### Filtrando dados pelo gráfico
 
 1. **Clique/toque em uma fatia** do gráfico de pizza ou em um **ponto** do gráfico de linha.
-2. A fatia/ponto ficará **destacada** visualmente.
-3. A tabela e os KPIs serão **atualizados automaticamente**, mostrando apenas os dados correspondentes ao item clicado.
-4. Outros gráficos com colunas diferentes também podem ser clicados, **acumulando filtros** (ex.: clicar em "Empresa X" no gráfico de empresas e depois em "Jan/2026" no gráfico de datas).
+2. A fatia/ponto ficará **destacada** visualmente (as demais ficam com transparência).
+3. A tabela, os KPIs e **todos os outros gráficos** serão **atualizados automaticamente**, mostrando dados filtrados pelo item clicado.
+4. Gráficos com colunas diferentes podem ser clicados em sequência, **acumulando filtros** (ex.: clicar em "Empresa X" no gráfico de empresas e depois em "Vendedor Y" no de vendedores).
+
+### Cross-filtering (filtragem cruzada)
+
+Quando você clica em uma fatia, **todos os outros gráficos recalculam** para refletir o filtro aplicado:
+
+- Clicou em **Empresa X** → o gráfico de Vendedores mostra os vendedores **daquela empresa**, o de Clientes mostra os clientes daquela empresa, e assim por diante.
+- Clicou depois em **Vendedor Y** → todos os gráficos agora refletem **Empresa X + Vendedor Y**.
+- O gráfico onde você clicou **mantém o destaque visual** na fatia selecionada, preservando a cor original mesmo que o ranking dos demais mude.
+
+> **Exemplo prático**: Ao clicar em "Empresa 3" no gráfico de empresas e depois em "Denis" no gráfico de vendedores, a tabela mostra pedidos da Empresa 3 do Denis, os KPIs refletem esses valores, e os gráficos de Cliente, Situação, Natureza, etc. mostram dados apenas dessa combinação.
 
 ### Removendo o filtro do gráfico
 
 - **Clique/toque novamente** na mesma fatia ou ponto já selecionado.
-- O destaque será removido e os dados voltarão ao estado anterior.
+- O destaque será removido e os dados voltarão ao estado anterior (considerando os demais filtros que ainda estejam ativos).
 
 ### Regras de acumulação
 
-- Gráficos com **colunas diferentes** acumulam filtros (ex.: empresa + vendedor).
+- Gráficos com **colunas diferentes** acumulam filtros (ex.: empresa + vendedor + cliente).
 - Gráficos com a **mesma coluna de agrupamento** substituem a seleção (ex.: dois gráficos por empresa — ao clicar no segundo, o primeiro é desmarcado).
+
+### Gráficos de valor único
+
+Gráficos de pizza com **apenas uma fatia** (100%) são **ocultados automaticamente**, pois não agregam valor visual. Assim que os filtros mudam e geram mais de uma fatia, o gráfico reaparece.
+
+### Sincronização com o funil da tabela
+
+O filtro do gráfico e o funil da coluna na tabela são **sincronizados**:
+
+- Se você **filtrou pelo gráfico** (ex.: clicou no vendedor "João") e depois usa o **funil** da mesma coluna para refinar, a seleção do gráfico é automaticamente substituída.
+- Se o funil filtra **exatamente 1 valor** (ex.: só o vendedor "João"), o gráfico correspondente exibe a fatia do João **automaticamente destacada**, como se você tivesse clicado diretamente.
+- Ao usar o botão **Limpar** do funil, a seleção do gráfico correspondente também é removida.
 
 ---
 
@@ -350,8 +376,10 @@ Presets permitem **salvar uma configuração completa** de análise para reutili
 ### Carregando um preset
 
 1. No Picker de **Preset** (ao lado do campo Fonte), selecione o preset desejado.
-2. As configurações serão aplicadas automaticamente (colunas, gráficos, KPIs e filtros).
+2. As configurações serão aplicadas **instantaneamente** (colunas, gráficos, KPIs e filtros) — sem tempo de espera.
 3. Clique em **Carregar** para buscar os dados com a configuração do preset.
+
+> **Nota**: O carregamento do preset é instantâneo — os filtros são configurados imediatamente sem aguardar o carregamento das listas de opções em segundo plano.
 
 ### Excluindo um preset
 
@@ -444,7 +472,13 @@ O acesso às funcionalidades de Análises é controlado por permissões. A tabel
 - Sim! No celular os dados aparecem como cards com scroll infinito. Os KPIs e gráficos funcionam normalmente.
 
 ### Como filtrar clicando no gráfico?
-- Basta tocar/clicar em uma fatia do gráfico de pizza ou em um ponto do gráfico de linha. A fatia ficará destacada e os dados serão filtrados. Toque novamente para remover o filtro.
+- Basta tocar/clicar em uma fatia do gráfico de pizza ou em um ponto do gráfico de linha. A fatia ficará destacada e **todos os outros gráficos, KPIs e a tabela serão atualizados** (cross-filtering). Toque novamente na mesma fatia para remover o filtro.
+
+### Os gráficos somem depois que eu clico?
+- Gráficos de pizza com **apenas 1 fatia** (100%) são ocultados automaticamente, pois não agregam valor visual. Isso acontece quando o filtro aplicado resulta em um único valor naquela dimensão. Ao remover o filtro ou aplicar outros que gerem mais fatias, o gráfico reaparece.
+
+### O gráfico filtrado pelo funil não aparece destacado?
+- Quando o funil da tabela filtra **exatamente 1 valor**, o gráfico correspondente destaca automaticamente a fatia daquele valor. Se filtrar múltiplos valores, o destaque não é aplicado (pois não há uma única fatia a destacar).
 
 ### Os presets são compartilhados entre usuários?
 - Não. Cada usuário tem seus próprios presets. Eles ficam salvos no servidor e podem ser acessados de qualquer dispositivo.
